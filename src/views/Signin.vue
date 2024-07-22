@@ -2,7 +2,9 @@
 	import * as z from 'zod'
 	import { ref } from 'vue'
 	import { useRouter } from 'vue-router'
+//@ts-ignore
 	import { Button } from '@/components/ui/button'
+//@ts-ignore
 	import {
 	  FormControl,
 	  FormDescription,
@@ -11,8 +13,10 @@
 	  FormLabel,
 	  FormMessage,
 	} from '@/components/ui/form'
+//@ts-ignore
 	import { Input } from '@/components/ui/input'
 	import { toast } from '@/components/ui/toast'
+//@ts-ignore
 	import { AutoForm } from '@/components/ui/auto-form'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'

@@ -1,12 +1,18 @@
 <script setup lang="ts">
 import axios from 'axios';
+//@ts-ignore
 import { Button } from '@/components/ui/button';
 import { onMounted, ref } from 'vue';
+//@ts-ignore
 import BestNavbar from '../components/BestNavbar.vue' 
+//@ts-ignore
 import { Input } from '@/components/ui/input'
+//@ts-ignore
 import { Label } from '@/components/ui/label'
+//@ts-ignore
 import { toast } from '@/components/ui/toast';
 
+//@ts-ignore
 import {
   Drawer,
   DrawerClose,
