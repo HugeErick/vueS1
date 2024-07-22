@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Login from "../views/Login.vue";
 import Signin from "../views/Signin.vue";
 import Home from "../views/Home.vue";
+import Jav from "../views/Jav.vue";
 import Cookies from 'js-cookie';
 import axios, {AxiosError} from 'axios'
 
@@ -18,6 +19,10 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     component: Login,
   },
+	{
+		path: "/jav",
+		component: Jav,
+	},
   {
     path: "/", // Catch all unmatched routes
     redirect: "/login",

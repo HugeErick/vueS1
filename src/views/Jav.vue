@@ -29,6 +29,39 @@ const handleFileChange = (event: Event) => {
   }
 };
 
+const uploadVideo = async () => {
+  if (!selectedFile.value) {
+    console.error('No file selected');
+    return;
+ };
+
+ const formData = new FormData();
+ formData.append('video', selectedFile.value);
+
+  try {
+    const response = await axios.post('http://localhost:4000/vid/uploadvideo', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      withCredentials: true,
+    });
+
+    if (response.status === 201) {
+			toast({
+				title: 'video uploaded successfully'
+			});
+      console.log('Video uploaded successfully:', response.data);
+			fetchVideos();
+    }
+  } catch (error) {
+			toast({
+				variant: 'destructive',
+				title: 'Error uploading video',
+				description: error
+			});
+    console.error('Error uploading video:', error);
+  }
+};
 
 const fetchVideos = async () => {
   try {
@@ -82,6 +115,35 @@ onMounted(async () => {
 	<BestNavbar/>
 	<div class="mt-14 mx-4">
 		<div class="flex flex-col items-center rounded-md border border-gray-500">
+			<div class="flex justify-end w-full m-3 pr-4">
+				<div class="p-1">
+					<Drawer>
+						<DrawerTrigger>
+							<Button>
+								Add video
+							</Button>
+						</DrawerTrigger>
+						<DrawerContent>
+							<DrawerHeader>
+								<DrawerTitle>Upload video</DrawerTitle>
+								<DrawerDescription>This action cannot be undone for now</DrawerDescription>
+							</DrawerHeader>
+							<DrawerFooter>
+							<Label for="video">Video</Label>
+								<Input id="video" type="file" @change="handleFileChange" accept="video/mp4"/>
+								<Button @click="uploadVideo" >
+									Submit
+								</Button>
+								<DrawerClose>
+									<Button variant="outline">
+										Cancel
+									</Button>
+								</DrawerClose>
+							</DrawerFooter>
+						</DrawerContent>
+					</Drawer>
+				</div>
+			</div>
 			<div class="my-4 mx-2 flex flex-row flex-nowrap">
 				<div
 					v-for="(video, index) in videos"
@@ -98,4 +160,5 @@ onMounted(async () => {
 		</div>
 	</div>
 </template>
+
 

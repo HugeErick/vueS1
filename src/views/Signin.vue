@@ -20,8 +20,11 @@ import axios from 'axios'
 
 	const schema = toTypedSchema(z
   .object({
-	  username: z.string().min(3).max(20).regex(/^[a-zA-Z0-9_-]+$/),
-		password: z.string().min(6).max(20),
+		username : z.string().min(3).max(20).regex(/^[a-zA-Z0-9_-]+$/, "invalid username format"),
+		password: z.string().min(6).max(20)
+		.regex(/[A-Z]/, "must contain at least one uppercase letter")
+    .regex(/[a-z]/, "must contain at least one lowercase letter")
+    .regex(/[0-9]/, "must contain at least one number"),
     confirm: z.string(),
   })
   .refine(data => data.password === data.confirm, {
@@ -49,13 +52,13 @@ const onSubmit = handleSubmit(async (values) => {
         description: 'Redirecting to login...',
       })
       router.push('/login')
-    }
-  } catch (error) {
-    toast({
+		} 
+	} catch (error) {
+		toast({
 			variant: 'destructive',
-      title: 'Error',
-      description: error.response?.data?.error || 'An error occurred',
-    })
+			title: 'Error',
+			description: error.response?.data?.error || 'An error occurred',
+		})
   } finally {
     loading.value = false
   }
@@ -66,6 +69,7 @@ const onSubmit = handleSubmit(async (values) => {
 	<div class="flex justify-center mt-12 py-6">
 		<form class="w-1/2 flex flex-col border border-gray-300 rounded-md p-5 gap-5"
 					@submit="onSubmit">
+      <h2 class="ml-2 text-xl font-bold text-gray-900">Sign up</h2>
 			<FormField name="username" v-slot="{ componentField }">
         <FormItem>
           <FormLabel>Username</FormLabel>

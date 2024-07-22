@@ -1,3 +1,6 @@
+# Production
+*.env
+
 # Logs
 logs
 *.log

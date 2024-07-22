@@ -1,13 +1,12 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
-import * as z from 'zod'
-import axios from 'axios'
-import Cookies from 'js-cookie'
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { useForm } from 'vee-validate';
+import { toTypedSchema } from '@vee-validate/zod';
+import * as z from 'zod';
+import axios from 'axios';
 
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/button';
 import {
   FormControl,
   FormDescription,
@@ -15,9 +14,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/toast'
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/toast';
 
 const username = ref('');
 const password = ref('');
@@ -46,8 +45,12 @@ const onSubmit = handleSubmit(async (values) => {
         title: 'Login successful!',
 				description: `Welcome ${values.username}`,
       });
-      router.push('/home');
-    }
+    const role = response.data.role;
+      if (role === 'admin') {
+        router.push('/jav');
+      } else {
+        router.push('/home');
+      }}
   } catch (error) {
     toast({
 			variant: 'destructive',
@@ -64,6 +67,25 @@ const isFormValid = computed(() => {
   const isPasswordValid = password.value.length >= 6 && password.value.length <= 20;
   return isUsernameValid && isPasswordValid;
 });
+
+onMounted(() => {
+  axios.get('http://localhost:4000/api/protected', { withCredentials: true })
+    .then(response => {
+      if (response.status === 200) {
+        const role = response.data.role;
+        if (role === 'admin') {
+          router.push('/jav');
+        } else {
+          router.push('/home');
+        }
+      }
+    })
+    .catch(error => {
+      console.log('User not logged in', error);
+    });
+});
+
+
 </script>
 
 <template>
