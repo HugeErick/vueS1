@@ -54,10 +54,11 @@ const uploadVideo = async () => {
 			fetchVideos();
     }
   } catch (error) {
+			const errorMessage = (error instanceof Error) ? error.message : 'An error has ocurred';
 			toast({
 				variant: 'destructive',
 				title: 'Error uploading video',
-				description: error
+				description: errorMessage
 			});
     console.error('Error uploading video:', error);
   }
