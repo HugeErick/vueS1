@@ -1,9 +1,8 @@
-import path from 'node:path'
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
-
-import tailwind from 'tailwindcss'
-import autoprefixer from 'autoprefixer'
+import path from 'node:path';
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
+import tailwind from 'tailwindcss';
+import autoprefixer from 'autoprefixer';
 
 export default defineConfig({
   css: {
@@ -17,13 +16,19 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-	server: {
-		proxy: {
-			'/' : {
-				target : 'http//localhost:4000',
-				changeOrigin : true, 
-				secure : false,
-			},
-		},
-	},
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+      },
+      '/vid': {
+        target: 'http://localhost:4000',
+        changeOrigin: true,
+        secure: false,
+      },
+    },
+  },
 });
+
