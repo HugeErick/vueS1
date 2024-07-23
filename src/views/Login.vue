@@ -51,7 +51,7 @@ const onSubmit = handleSubmit(async (values) => {
       } else {
         router.push('/home');
       }}
-  } catch (error) {
+  } catch (error:any) {
     toast({
 			variant: 'destructive',
       title: 'Error',
