@@ -6,9 +6,7 @@ import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
 import axios from 'axios';
 
-//@ts-ignore
 import { Button } from '@/components/ui/button';
-//@ts-ignore
 import {
   FormControl,
   FormDescription,
@@ -17,9 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-//@ts-ignore
 import { Input } from '@/components/ui/input';
-//@ts-ignore
 import { toast } from '@/components/ui/toast';
 
 const username = ref('');
