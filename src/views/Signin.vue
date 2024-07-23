@@ -53,10 +53,11 @@ const onSubmit = handleSubmit(async (values) => {
       router.push('/login')
 		} 
 	} catch (error) {
+	const errorMessage = (error instanceof Error) ? error.message : 'An error occurred';
 		toast({
 			variant: 'destructive',
 			title: 'Error',
-			description: error.response?.data?.error || 'An error occurred',
+			description: errorMessage,
 		})
   } finally {
     loading.value = false
