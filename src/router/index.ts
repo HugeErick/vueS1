@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory} from "vue-router";
-import type { RouteRecordRaw } from "vue-router";
-import Login from "../views/Login.vue";
-import Signin from "../views/Signin.vue";
-import Home from "../views/Home.vue";
-import Jav from "../views/Jav.vue";
+import { createRouter, createWebHistory} from 'vue-router';
+import type { RouteRecordRaw } from 'vue-router';
+import Login from '../views/Login.vue';
+import Signin from '../views/Signin.vue';
+import Home from '../views/Home.vue';
+import Jav from '../views/Jav.vue';
+import Settings from '../views/Settings.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -22,8 +23,12 @@ const routes: Array<RouteRecordRaw> = [
 		path: "/jav",
 		component: Jav,
 	},
+	{
+		path : '/settings',
+		component: Settings
+	},
   {
-    path: "/", // Catch all unmatched routes
+    path: "/", 
     redirect: "/login",
   },
 ];

@@ -18,17 +18,42 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 
-const selectedFile = ref<File | null>(null);
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+
+const router = useRouter();
+const store = useStore();
+
 const videos = ref<Array<{ id: number, path: string }>>([]);
 const videoIds = ref<Array<number>>([]); // Array to store video IDs
 
-const handleFileChange = (event: Event) => {
-  const input = event.target as HTMLInputElement;
-  if (input.files && input.files[0]) {
-    selectedFile.value = input.files[0];
-  }
-};
-
+const renewSession = async () => {
+	const user = store.getters.getUser;
+	if (user) {
+		try {
+			const response = await axios.get(`http://localhost:4000/api/fixtokens?username=${user.name}`, { withCredentials: true });
+			if (response.status === 200)
+				console.log('Token fix');
+		} catch (error) {
+			console.error('Token fixing failed!', error);
+      router.push('/login');
+		}
+	} else {
+		console.log('vuex getter null');
+	}
+	
+      try {
+        const response = await axios.get('http://localhost:4000/api/renewsession', { withCredentials: true });
+        if (response.status === 200) {
+          console.log('Cookie renewed!');
+        } else if (response.status === 401) {
+          router.push('/login');
+        }
+      } catch (error) {
+        console.error('Cookie renewal failed!', error);
+        router.push('/login');
+      }
+    };
 
 const fetchVideos = async () => {
   try {
@@ -63,16 +88,7 @@ const openVideoInNewTab = async (videoId: number) => {
 };
 
 onMounted(async () => {
-	axios.get('http://localhost:4000/api/renewsession', {withCredentials : true})
-		.then(response =>  {
-			if (response.status === 200) {
-				console.log('Cookie renewed!');
-			}
-		}) 
-		.catch(error => {
-			console.error('Cookie renewed failed!', error);
-		});
-
+		renewSession();	
 		fetchVideos();
  });
 
@@ -80,7 +96,7 @@ onMounted(async () => {
 
 <template>
 	<BestNavbar/>
-	<div class="mt-14 mx-4">
+	<div class="mt-20 mx-4">
 		<div class="flex flex-col items-center rounded-md border border-gray-500">
 			<div class="my-4 mx-2 flex flex-row flex-nowrap">
 				<div

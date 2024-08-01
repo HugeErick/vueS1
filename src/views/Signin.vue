@@ -16,6 +16,7 @@ import { toast } from '@/components/ui/toast'
 import { toTypedSchema } from '@vee-validate/zod'
 import { useForm } from 'vee-validate'
 import axios from 'axios'
+import GoogleSignUpButton from '../components/GoogleSignUpButton.vue'
 
 	const schema = toTypedSchema(z
   .object({
@@ -66,7 +67,7 @@ const onSubmit = handleSubmit(async (values) => {
 </script>
 
 <template>
-	<div class="flex justify-center mt-12 py-6">
+	<div class="flex justify-center mt-20 py-6">
 		<form class="w-1/2 flex flex-col border border-gray-300 rounded-md p-5 gap-5"
 					@submit="onSubmit">
       <h2 class="ml-2 text-xl font-bold text-gray-900">Sign up</h2>
@@ -99,6 +100,9 @@ const onSubmit = handleSubmit(async (values) => {
           <FormMessage />
         </FormItem>
       </FormField>
+			<div class="flex mx-auto items-center justify-center">
+				<GoogleSignUpButton/>
+			</div>
     	<Button type="submit" class="min-w-14 max-w-1/5 mt-1">
     	  Submit
 			</Button>

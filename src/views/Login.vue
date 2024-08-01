@@ -5,6 +5,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import * as z from 'zod';
 import axios from 'axios';
+import GoogleSignUpButton from '../components/GoogleSignUpButton.vue'
 
 import { Button } from '@/components/ui/button';
 import {
@@ -124,6 +125,9 @@ onMounted(() => {
         </FormField>
         <div class="flex items-start justify-center flex-col gap-4">
           <a href="/signin" class="text-sm hover:underline text-cyan-600 font-bold">Sign in</a>
+					<div class="flex mx-auto items-center justify-center">
+						<GoogleSignUpButton/>
+					</div>
           <Button type="submit" :disabled="!isFormValid || loading">
             Submit
           </Button>
