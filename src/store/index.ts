@@ -34,11 +34,11 @@ const mutations = {
 }
 
 const actions = {
-  login({ commit }: { commit: Store.VuexStore<State>['commit'] }, { user, token }: { user: User; token: string }) {
+  login({ commit }: { commit: Store<State>['commit'] }, { user, token }: { user: User; token: string }) {
     commit('setUser', user);
     commit('setToken', token);
   },
-  logout({ commit }: { commit: Store.VuexStore<State>['commit'] }) {
+  logout({ commit }: { commit: Store<State>['commit'] }) {
     commit('clearAuth');
   },
 }
@@ -49,7 +49,7 @@ const getters = {
   getToken: (state: State) => state.token,
 }
 
-const storeOptions: Store.storeOptions<State> = {
+const storeOptions = {
   state,
   mutations,
   actions,
