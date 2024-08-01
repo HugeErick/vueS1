@@ -1,4 +1,4 @@
-import * as vuex from 'vuex';
+import { Store, createStore }  from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 interface State {
@@ -34,11 +34,11 @@ const mutations = {
 }
 
 const actions = {
-  login({ commit }: { commit: vuex.VuexStore<State>['commit'] }, { user, token }: { user: User; token: string }) {
+  login({ commit }: { commit: Store.VuexStore<State>['commit'] }, { user, token }: { user: User; token: string }) {
     commit('setUser', user);
     commit('setToken', token);
   },
-  logout({ commit }: { commit: vuex.VuexStore<State>['commit'] }) {
+  logout({ commit }: { commit: Store.VuexStore<State>['commit'] }) {
     commit('clearAuth');
   },
 }
@@ -49,7 +49,7 @@ const getters = {
   getToken: (state: State) => state.token,
 }
 
-const storeOptions: vuex.storeOptions<State> = {
+const storeOptions: Store.storeOptions<State> = {
   state,
   mutations,
   actions,
@@ -57,5 +57,9 @@ const storeOptions: vuex.storeOptions<State> = {
 	plugins: [createPersistedState()],
 }
 
-export default vuex.createStore(storeOptions);
+interface ComponentCustomProperties {
+	$store: Store<State>
+}
+
+export default createStore(storeOptions);
 
